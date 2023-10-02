@@ -1,6 +1,8 @@
-  const header=document.getElementsByClassName('title');
-  header[0].style.fontWeight ='bold';
-  header[0].style.color ='green';
-  const elem=document.getElementById('main');
-  console.log(elem);
+const items = document.getElementsByClassName('list-group-item');
+console.log(items);
+console.log(items[1]);
+  items[2].style.backgroundColor ='green';
+  for(let i=0 ;i<items.length ;i++){
+    items[i].style.fontWeight ='bold';
+  }
   
