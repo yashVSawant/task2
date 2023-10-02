@@ -1,8 +1,11 @@
 const items = document.getElementsByClassName('list-group-item');
-console.log(items);
-console.log(items[1]);
-  items[2].style.backgroundColor ='green';
-  for(let i=0 ;i<items.length ;i++){
-    items[i].style.fontWeight ='bold';
-  }
+//items[4].style.fontWeight ='bold';
+const li = document.getElementsByTagName('li');
+li[4].style.fontWeight ='bold';
+for(let i=0 ;i<li.length ;i++){
+    li[i].style.backgroundColor ='#f4f4f4';
+}
+
+
+
   
