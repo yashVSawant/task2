@@ -18,6 +18,9 @@ function addItem(e){
   // Get input value
   var newItem = document.getElementById('item').value;
  const newItem2 = document.getElementById('description').value;
+ 
+ //local storge
+ localStorage.setItem(`${newItem2}`,`${newItem}` );
 
   // Create new li element
   var li = document.createElement('li');
