@@ -20,7 +20,13 @@ function addItem(e){
  const newItem2 = document.getElementById('description').value;
  
  //local storge
- localStorage.setItem(`${newItem2}`,`${newItem}` );
+ //localStorage.setItem(newItem2,newItem );
+ let myObject ={
+  itemname: newItem2 ,
+  description : newItem 
+ };
+ let myObjSerialize = JSON.stringify(myObject);
+ localStorage.setItem('obj',myObjSerialize);
 
   // Create new li element
   var li = document.createElement('li');
