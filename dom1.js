@@ -1,6 +1,7 @@
 var form = document.getElementById('addForm');
 var itemList = document.getElementById('items');
 var filter = document.getElementById('filter');
+var filter2 = document.getElementById('description');
 
 // Form submit event
 form.addEventListener('submit', addItem);
@@ -9,20 +10,27 @@ itemList.addEventListener('click', removeItem);
 // Filter event
 filter.addEventListener('keyup', filterItems);
 
+
 // Add item
 function addItem(e){
   e.preventDefault();
 
   // Get input value
   var newItem = document.getElementById('item').value;
-
+ const newItem2 = document.getElementById('description').value;
 
   // Create new li element
   var li = document.createElement('li');
+
   // Add class
   li.className = 'list-group-item';
+  
   // Add text node with input value
-  li.appendChild(document.createTextNode(newItem));
+  li.appendChild(document.createTextNode(newItem2+" "+newItem));
+  //li.appendChild(document.createTextNode(' '));
+  //li.appendChild(document.createTextNode(newItem));
+
+  
 
   // Create del button element
   var deleteBtn = document.createElement('button');
@@ -47,7 +55,10 @@ function addItem(e){
 
 
 
+
+//console.log(listNew[0]);
 const items1 = document.querySelectorAll('ul .list-group-item');
+
 const li1 = document.querySelectorAll('ul button');
 for(let i=0 ;i<items1.length ;i++){
 const newUl = document.createElement('button');
@@ -56,8 +67,20 @@ newUl.idName ='editId';
 const liText = document.createTextNode('edit');
 newUl.appendChild(liText);
 items1[i].insertBefore(newUl,li1[i]);
+
 }
 
+// createing new input
+const container = document.getElementById('addForm');
+const h1 = document.getElementById('item');
+const input = document.createElement('input');
+input.type ='text';
+input.className ='form-control mr-2';
+input.id ='description';
+
+
+//container.appendChild(input);
+ container.insertBefore(input,h1);
 
 
 // Remove item
@@ -76,12 +99,16 @@ function filterItems(e){
   var text = e.target.value.toLowerCase();
   // Get lis
   var items = itemList.getElementsByTagName('li');
+  console.log(items[4]);
   // Convert to an array
   Array.from(items).forEach(function(item){
     var itemName = item.firstChild.textContent;
+    var iN = item.childNodes[4];
+    console.log(iN);
     if(itemName.toLowerCase().indexOf(text) != -1){
       item.style.display = 'block';
-    } else {
+    } 
+    else {
       item.style.display = 'none';
     }
   });
