@@ -1,7 +1,9 @@
 var form = document.getElementById('addForm');
 var itemList = document.getElementById('items');
 form.addEventListener('submit', addItem);
-console.log('good');
+itemList.addEventListener('click', removeItem);
+
+
 function addItem(e){
     e.preventDefault();
   
@@ -10,6 +12,7 @@ function addItem(e){
     var Item1Value = document.getElementById('name');
     Item1Value.value='';
     const newItem2 = document.getElementById('email').value;
+    //console.log(newItem2);
     var Item2Value = document.getElementById('email');
     Item2Value.value='';
     const newItem3 = document.getElementById('number').value;
@@ -28,8 +31,39 @@ function addItem(e){
 
    const li = document.createElement('li');
    li.className ='list';
-   li.appendChild(document.createTextNode('Name:'+newItem1+" "+'email:'+newItem2+'phone no:'+newItem3));
+   li.appendChild(document.createTextNode('Name:'+newItem1+" "+'phone no:'+newItem3+'  email:'));
+   li.appendChild(document.createTextNode(newItem2));
+
+   var deleteBtn = document.createElement('button');
+   //var editBtn = document.createElement('button');
+ 
+   // Add classes to del button
+   deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
+   //editBtn.className ='edit edit-danger edit-sm float-right edit';
+ 
+   // Append text node
+   deleteBtn.appendChild(document.createTextNode('Delete'));
+   //editBtn.appendChild(document.createTextNode('edit'));
+ 
+   // Append button to li
+   //li.appendChild(editBtn);
+   li.appendChild(deleteBtn);
+
    itemList.appendChild(li);
    
 }
+  //remove
+function removeItem(e){
+    if(e.target.classList.contains('delete')){
+      
+        var li = e.target.parentElement;
+        const keyMail = li.childNodes[1].textContent;
+        
+        console.log(keyMail);
+        //console.log("yash");
+        localStorage.removeItem(keyMail);
+        itemList.removeChild(li);
+      
+    }
+  }
   
