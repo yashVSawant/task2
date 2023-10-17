@@ -3,19 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Appointment app</title>
 </head>
 <body>
-    <form id="addForm" class="form-inline mb-3">
-    <lable font-size="30px">Name</lable><br>
-    <input type="text" class="form-control mr-2" id="name" ><br>
-    <lable font-size="30px">Email</lable><br>
-    <input type="email" class="form-control mr-2" id="email" ><br>
-    <lable font-size="30px">Phone</lable><br>
-    <input type="tel" class="form-control mr-2" id="number" ><br>
-    <input type="submit" class="btn btn-dark" value="Submit">
+    <div class="container">
+    <form class="form">
+        <div class="row">
+            
+               <lable class="text">Name :</lable>
+               <input type="text" id="name" required>    
+               <br> <br> <br> 
+                <lable class="text">Email-Id :</lable>
+                <input type="text" id="email" required>    
+                <br> <br> <br> 
+                <lable class="text">Phone No :</lable>
+                <input type="number" id="number" required> 
+             
+                <br><br> <br> <br> 
+                <button class="btn btn-primary" data-bs-toggle="button" id="button"> Submit </button>
+            
+        
     </form>
-    <ul id="items" class="list-group"></ul>
-    <script src="eidit.js"></script>
+    <div class="row">
+       <ul class="list" id="ul"></ul>
+    </div>
+    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.0/axios.min.js"></script>
+    <script src="demoApp.js"></script>
+    
 </body>
 </html>

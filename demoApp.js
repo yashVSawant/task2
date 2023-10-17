@@ -1,69 +1,126 @@
-var form = document.getElementById('addForm');
-var itemList = document.getElementById('items');
-form.addEventListener('submit', addItem);
-itemList.addEventListener('click', removeItem);
+const form = document.querySelector("form");
+const namee=document.getElementById("name");
+const email =document.getElementById("email");
+const phone=document.getElementById("number");
+const button = document.getElementById("button");
+const ul = document.getElementById("ul");
 
 
-function addItem(e){
-    e.preventDefault();
+function createList( Nvalue, Evalue, Pvalue,Ivalue){
+  const list=document.createElement('li');
+  list.className="list-group-item";
   
-    // Get input value
-    var newItem1 = document.getElementById('name').value;
-    var Item1Value = document.getElementById('name');
-    Item1Value.value='';
-    const newItem2 = document.getElementById('email').value;
-    //console.log(newItem2);
-    var Item2Value = document.getElementById('email');
-    Item2Value.value='';
-    const newItem3 = document.getElementById('number').value;
-    var Item2Value = document.getElementById('number');
-    Item2Value.value='';
-   
-   //local storge
-   //localStorage.setItem(newItem2,newItem );
-   let myObject ={
-    name: newItem1 ,
-    email: newItem2,
-    phone: newItem3
-   };
-   let myObjSerialize = JSON.stringify(myObject);
-   localStorage.setItem(newItem2,myObjSerialize);
+  list.appendChild(document.createTextNode(" Name: "));
+  list.appendChild(document.createTextNode(Nvalue));
+  list.appendChild(document.createTextNode(" email: "));
+  list.appendChild(document.createTextNode(Evalue));
+  list.appendChild(document.createTextNode(" phone no: "));
+  list.appendChild(document.createTextNode(Pvalue));
+  list.appendChild(document.createTextNode(" Id: "));
+  list.appendChild(document.createTextNode(Ivalue));
 
-   const li = document.createElement('li');
-   li.className ='list';
-   li.appendChild(document.createTextNode('Name:'+newItem1+" "+'phone no:'+newItem3+'  email:'));
-   li.appendChild(document.createTextNode(newItem2));
+  const del = document.createElement('button');
+  const edit = document.createElement('button');
 
-   var deleteBtn = document.createElement('button');
-   //var editBtn = document.createElement('button');
- 
-   // Add classes to del button
-   deleteBtn.className = 'btn btn-danger btn-sm float-right delete';
-   //editBtn.className ='edit edit-danger edit-sm float-right edit';
- 
-   // Append text node
-   deleteBtn.appendChild(document.createTextNode('Delete'));
-   //editBtn.appendChild(document.createTextNode('edit'));
- 
-   // Append button to li
-   //li.appendChild(editBtn);
-   li.appendChild(deleteBtn);
+  del.className = 'btn btn-danger btn-sm float-right delete';
+  edit.className ='edit edit-danger edit-sm float-right edit';
 
-   itemList.appendChild(li);
-   
+  del.appendChild(document.createTextNode('delete'));
+  edit.appendChild(document.createTextNode('edit'));
+
+  list.appendChild(edit);
+  list.append(del);
+
+  ul.appendChild(list);
 }
-  //remove
-function removeItem(e){
+function checkCloud(){
+
+     const storage = axios.get("https://crudcrud.com/api/1b58b5a411af4f0aa2408a4964be048f/appointmentData")   
+            .then((response)=>{
+              console.log(response.data);
+              uploadSavedList(response.data);
+            })
+            .catch((err)=>{
+              console.log(err);
+            })
+}
+
+function uploadSavedList(dataObjarr){
+      for(let i=0 ; i<dataObjarr.length ;i++){
+          
+              let value = dataObjarr[i];
+             
+              console.log(value['nameValue']); 
+              
+              let Nvalue = dataObjarr[i]['nameValue'];
+              let Evalue = dataObjarr[i]['emailValue'];
+              let Pvalue = dataObjarr[i]['phoneValue'];
+              let Ivalue = dataObjarr[i]['_id'];
+            createList(Nvalue ,Evalue ,Pvalue,Ivalue);
+              
+          }
+}
+
+
+checkCloud();
+
+
+ul.addEventListener('click' , e=>{
     if(e.target.classList.contains('delete')){
-      
-        var li = e.target.parentElement;
-        const keyMail = li.childNodes[1].textContent;
+         
+          var li = e.target.parentElement;
+          //console.log(li.id);
+          const id = li.childNodes[7].textContent;
+          ul.removeChild(li);
+          axios.delete(`https://crudcrud.com/api/1b58b5a411af4f0aa2408a4964be048f/appointmentData/${id}`);
+          
+          
         
-        console.log(keyMail);
-        //console.log("yash");
-        localStorage.removeItem(keyMail);
-        itemList.removeChild(li);
+      }
+      else if(e.target.classList.contains('edit')){
+        
+        var li = e.target.parentElement;
+        const valueN= li.childNodes[1].textContent;
+        const valueE= li.childNodes[3].textContent;
+        const valueP= li.childNodes[5].textContent;
+        const id = li.childNodes[7].textContent;
+        ul.removeChild(li);
+        axios.delete(`https://crudcrud.com/api/1b58b5a411af4f0aa2408a4964be048f/appointmentData/${id}`);
+        namee.value= valueN;
+        email.value= valueE;
+        phone.value= valueP;
       
     }
-  }
-  
+})
+
+
+    
+button.addEventListener('click',e=>{
+    e.preventDefault();
+    
+    const nameValue = namee.value;
+    namee.value="";
+    const emailValue = email.value;
+    email.value="";
+    const phoneValue =  phone.value;
+    phone.value="";
+
+    let obj ={
+       nameValue ,
+       emailValue,
+       phoneValue
+       };
+    let id;
+    axios.post("https://crudcrud.com/api/1b58b5a411af4f0aa2408a4964be048f/appointmentData",obj)   
+          .then((response)=>{
+            console.log(response.data['_id']);
+           
+          })
+          .catch((err)=>{
+            console.log(err);
+          })
+    
+    createList(nameValue ,emailValue ,phoneValue,id);
+
+});
+
