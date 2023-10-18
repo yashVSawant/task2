@@ -64,8 +64,6 @@ ul.addEventListener('click' , e=>{
                .then(ul.removeChild(li))
                .catch(()=>console.log('error'))
           
-          
-        
       }
       else if(e.target.classList.contains('edit')){
         
@@ -74,17 +72,24 @@ ul.addEventListener('click' , e=>{
         const valueE= li.childNodes[3].textContent;
         const valueP= li.childNodes[5].textContent;
         const id = li.id;
-        ul.removeChild(li);
-        axios.delete(`https://crudcrud.com/api/bddd3b3ccc8c411e9cfd120acafa5cc5/appointmentData/${id}`);
         namee.value= valueN;
         email.value= valueE;
         phone.value= valueP;
-      
+        axios.delete(`https://crudcrud.com/api/bddd3b3ccc8c411e9cfd120acafa5cc5/appointmentData/${id}`)
+               .then(ul.removeChild(li))
+               .catch(()=>console.log('error'))
     }
 })
 
+function createObject(nameValue ,emailValue ,phoneValue){
+      let obj ={
+        nameValue ,
+        emailValue,
+        phoneValue
+        };
+      return obj;  
+}
 
-    
 submit.addEventListener('click',e=>{
     e.preventDefault();
     
@@ -95,11 +100,7 @@ submit.addEventListener('click',e=>{
     const phoneValue =  phone.value;
     phone.value="";
 
-    let obj ={
-       nameValue ,
-       emailValue,
-       phoneValue
-       };
+    let obj = createObject(nameValue ,emailValue ,phoneValue);
     let id;
     axios.post("https://crudcrud.com/api/bddd3b3ccc8c411e9cfd120acafa5cc5/appointmentData",obj)   
           .then((response)=>{
