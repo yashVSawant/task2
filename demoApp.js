@@ -2,22 +2,21 @@ const form = document.querySelector("form");
 const namee=document.getElementById("name");
 const email =document.getElementById("email");
 const phone=document.getElementById("number");
-const button = document.getElementById("button");
+const submit = document.getElementById("button");
 const ul = document.getElementById("ul");
 
 
 function createList( Nvalue, Evalue, Pvalue,Ivalue){
   const list=document.createElement('li');
   list.className="list-group-item";
-  
+  list.id=Ivalue;
   list.appendChild(document.createTextNode(" Name: "));
   list.appendChild(document.createTextNode(Nvalue));
   list.appendChild(document.createTextNode(" email: "));
   list.appendChild(document.createTextNode(Evalue));
   list.appendChild(document.createTextNode(" phone no: "));
   list.appendChild(document.createTextNode(Pvalue));
-  list.appendChild(document.createTextNode(" Id: "));
-  list.appendChild(document.createTextNode(Ivalue));
+  
 
   const del = document.createElement('button');
   const edit = document.createElement('button');
@@ -33,7 +32,7 @@ function createList( Nvalue, Evalue, Pvalue,Ivalue){
 
   ul.appendChild(list);
 }
-function checkCloud(){
+window.addEventListener("DOMContentLoaded",()=>{
 
      const storage = axios.get("https://crudcrud.com/api/1b58b5a411af4f0aa2408a4964be048f/appointmentData")   
             .then((response)=>{
@@ -43,15 +42,11 @@ function checkCloud(){
             .catch((err)=>{
               console.log(err);
             })
-}
+})
 
 function uploadSavedList(dataObjarr){
       for(let i=0 ; i<dataObjarr.length ;i++){
           
-              let value = dataObjarr[i];
-             
-              console.log(value['nameValue']); 
-              
               let Nvalue = dataObjarr[i]['nameValue'];
               let Evalue = dataObjarr[i]['emailValue'];
               let Pvalue = dataObjarr[i]['phoneValue'];
@@ -61,16 +56,11 @@ function uploadSavedList(dataObjarr){
           }
 }
 
-
-checkCloud();
-
-
 ul.addEventListener('click' , e=>{
     if(e.target.classList.contains('delete')){
          
-          var li = e.target.parentElement;
-          //console.log(li.id);
-          const id = li.childNodes[7].textContent;
+          const li = e.target.parentElement;
+          const id = li.id;
           ul.removeChild(li);
           axios.delete(`https://crudcrud.com/api/1b58b5a411af4f0aa2408a4964be048f/appointmentData/${id}`);
           
@@ -83,7 +73,7 @@ ul.addEventListener('click' , e=>{
         const valueN= li.childNodes[1].textContent;
         const valueE= li.childNodes[3].textContent;
         const valueP= li.childNodes[5].textContent;
-        const id = li.childNodes[7].textContent;
+        const id = li.id;
         ul.removeChild(li);
         axios.delete(`https://crudcrud.com/api/1b58b5a411af4f0aa2408a4964be048f/appointmentData/${id}`);
         namee.value= valueN;
@@ -95,7 +85,7 @@ ul.addEventListener('click' , e=>{
 
 
     
-button.addEventListener('click',e=>{
+submit.addEventListener('click',e=>{
     e.preventDefault();
     
     const nameValue = namee.value;
@@ -114,13 +104,14 @@ button.addEventListener('click',e=>{
     axios.post("https://crudcrud.com/api/1b58b5a411af4f0aa2408a4964be048f/appointmentData",obj)   
           .then((response)=>{
             console.log(response.data['_id']);
-           
+            id = response.data['_id'];
+            createList(nameValue ,emailValue ,phoneValue,id);
           })
           .catch((err)=>{
             console.log(err);
           })
     
-    createList(nameValue ,emailValue ,phoneValue,id);
+    
 
 });
 
