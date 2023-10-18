@@ -60,8 +60,9 @@ ul.addEventListener('click' , e=>{
          
           const li = e.target.parentElement;
           const id = li.id;
-          ul.removeChild(li);
-          axios.delete(`https://crudcrud.com/api/bddd3b3ccc8c411e9cfd120acafa5cc5/appointmentData/${id}`);
+          axios.delete(`https://crudcrud.com/api/bddd3b3ccc8c411e9cfd120acafa5cc5/appointmentData/${id}`)
+               .then(ul.removeChild(li))
+               .catch(()=>console.log('error'))
           
           
         
