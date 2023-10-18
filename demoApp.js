@@ -12,9 +12,9 @@ function createList( Nvalue, Evalue, Pvalue,Ivalue){
   list.id=Ivalue;
   list.appendChild(document.createTextNode(" Name: "));
   list.appendChild(document.createTextNode(Nvalue));
-  list.appendChild(document.createTextNode(" email: "));
+  list.appendChild(document.createTextNode(" - email: "));
   list.appendChild(document.createTextNode(Evalue));
-  list.appendChild(document.createTextNode(" phone no: "));
+  list.appendChild(document.createTextNode(" - phone no: "));
   list.appendChild(document.createTextNode(Pvalue));
   
 
@@ -34,9 +34,8 @@ function createList( Nvalue, Evalue, Pvalue,Ivalue){
 }
 window.addEventListener("DOMContentLoaded",()=>{
 
-     const storage = axios.get("https://crudcrud.com/api/1b58b5a411af4f0aa2408a4964be048f/appointmentData")   
+     const storage = axios.get("https://crudcrud.com/api/bddd3b3ccc8c411e9cfd120acafa5cc5/appointmentData")   
             .then((response)=>{
-              console.log(response.data);
               uploadSavedList(response.data);
             })
             .catch((err)=>{
@@ -62,7 +61,7 @@ ul.addEventListener('click' , e=>{
           const li = e.target.parentElement;
           const id = li.id;
           ul.removeChild(li);
-          axios.delete(`https://crudcrud.com/api/1b58b5a411af4f0aa2408a4964be048f/appointmentData/${id}`);
+          axios.delete(`https://crudcrud.com/api/bddd3b3ccc8c411e9cfd120acafa5cc5/appointmentData/${id}`);
           
           
         
@@ -75,7 +74,7 @@ ul.addEventListener('click' , e=>{
         const valueP= li.childNodes[5].textContent;
         const id = li.id;
         ul.removeChild(li);
-        axios.delete(`https://crudcrud.com/api/1b58b5a411af4f0aa2408a4964be048f/appointmentData/${id}`);
+        axios.delete(`https://crudcrud.com/api/bddd3b3ccc8c411e9cfd120acafa5cc5/appointmentData/${id}`);
         namee.value= valueN;
         email.value= valueE;
         phone.value= valueP;
@@ -101,9 +100,8 @@ submit.addEventListener('click',e=>{
        phoneValue
        };
     let id;
-    axios.post("https://crudcrud.com/api/1b58b5a411af4f0aa2408a4964be048f/appointmentData",obj)   
+    axios.post("https://crudcrud.com/api/bddd3b3ccc8c411e9cfd120acafa5cc5/appointmentData",obj)   
           .then((response)=>{
-            console.log(response.data['_id']);
             id = response.data['_id'];
             createList(nameValue ,emailValue ,phoneValue,id);
           })
