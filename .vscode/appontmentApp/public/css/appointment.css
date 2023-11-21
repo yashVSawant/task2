@@ -1,0 +1,24 @@
+body{
+    display:flex;
+    background-color: rgb(119, 119, 41);
+    color:rgb(247, 247, 140)
+    }
+    #appointments{
+        margin-left: 20px;
+        width: 65%;
+        background-color: rgb(168, 168, 87);
+        color:rgb(248, 248, 197);
+    }
+    .input{
+        width: 80%;
+        height: 25px;
+        border-radius: 5px;
+        margin:10px;
+    }
+    .btn{
+        width: 120px;
+        height: 30px;
+        border-radius: 20px;
+        background-color: rgb(246, 255, 127);
+        margin:10px;
+    }
